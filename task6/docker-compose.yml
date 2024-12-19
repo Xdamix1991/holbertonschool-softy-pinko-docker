@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  back-end_1:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    expose:
+      - "5252"
+    container_name: softy-pinko-back-end_1
+
+
+  back-end_2:
+    build:
+      context: ./back-end
+      dockerfile: Dockerfile
+    expose:
+      - "5252"
+    container_name: softy-pinko-back-end_2
+
+
+  front-end:
+    build:
+      context: ./front-end
+      dockerfile: Dockerfile
+    expose:
+      - "9000"
+    container_name: softy-pinko-front-end
+
+
+  proxy:
+    build:
+      context: ./proxy
+      dockerfile: Dockerfile
+    image: softy-pinko-proxy
+    ports:
+      - "80:80"
+    container_name: proxy
+
+    depends_on:
+        - back-end_1
+        - back-end_2
+
